@@ -22,20 +22,20 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Install npm
+        run: npm install -g npm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --frozen-lockfile
 
       - name: Lint the code
-        run: pnpm lint
+        run: npm lint
 
       # - name: Analyze unused files and dependencies
-      #   run: pnpm knip
+      #   run: npm knip
 
       - name: Run Prettier check
-        run: pnpm format:check
+        run: npm format:check
 
       - name: Build the project
-        run: pnpm build
+        run: npm build

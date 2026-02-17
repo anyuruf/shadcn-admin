@@ -1,22 +1,16 @@
-import path from 'path'
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import tailwindcss from '@tailwindcss/vite'
-import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import path from 'path';
+import { defineConfig } from 'vite';
+import { reactRouter } from '@react-router/dev/vite';
+import tailwindcss from '@tailwindcss/vite';
+import { reactRouterDevTools } from "react-router-devtools";
+
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    tanstackRouter({
-      target: 'react',
-      autoCodeSplitting: true,
-    }),
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [reactRouterDevTools(), reactRouter(), tailwindcss()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, './app'),
     },
   },
 })
