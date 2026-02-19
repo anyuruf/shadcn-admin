@@ -1,8 +1,10 @@
 import { Toaster as Sonner, ToasterProps } from 'sonner'
-import { useTheme } from '@/context/theme-provider'
+import { useTheme } from 'remix-themes'
+import { CSSProperties } from 'react'
+
 
 export function Toaster({ ...props }: ToasterProps) {
-  const { theme = 'system' } = useTheme()
+  const [theme] = useTheme()
 
   return (
     <Sonner
@@ -13,7 +15,7 @@ export function Toaster({ ...props }: ToasterProps) {
           '--normal-bg': 'var(--popover)',
           '--normal-text': 'var(--popover-foreground)',
           '--normal-border': 'var(--border)',
-        } as React.CSSProperties
+        } as CSSProperties
       }
       {...props}
     />

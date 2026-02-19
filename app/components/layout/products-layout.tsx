@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router';
-import { getSidebarState } from '@/lib/session-server';
 import { cn } from '@/lib/utils';
 import { LayoutProvider } from '@/context/layout-provider';
 import { SearchProvider } from '@/context/search-provider';
@@ -7,14 +6,15 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/layout/app-sidebar';
 import { SkipToMain } from '@/components/skip-to-main';
 import { ReactNode } from 'react'
+import { getCookie } from '@/lib/cookie-server'
 
 
 type AuthenticatedLayoutProps = {
-  defaultOpen: boolean
   children?: ReactNode
 }
 
-export  async function ProductsLayout({ defaultOpen, children }: AuthenticatedLayoutProps) {
+export  async function ProductsLayout({  children }: AuthenticatedLayoutProps) {
+  const defaultOpen = getCookie('sidebar_state') !== 'false'
 
   return (
     <SearchProvider>

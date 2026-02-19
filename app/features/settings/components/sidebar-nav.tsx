@@ -1,5 +1,4 @@
-import { useState, type JSX } from 'react'
-import { useLocation, useNavigate, Link } from '@tanstack/react-router'
+import { useState, type JSX, HTMLAttributes } from 'react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -10,8 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Link, useLocation, useNavigate } from 'react-router'
 
-type SidebarNavProps = React.HTMLAttributes<HTMLElement> & {
+type SidebarNavProps = HTMLAttributes<HTMLElement> & {
   items: {
     href: string
     title: string
@@ -26,7 +26,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
 
   const handleSelect = (e: string) => {
     setVal(e)
-    navigate({ to: e })
+    navigate(e)
   }
 
   return (

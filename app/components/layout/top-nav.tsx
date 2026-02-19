@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { NavLink } from 'react-router'
 import { Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -8,8 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { HTMLAttributes } from 'react'
 
-type TopNavProps = React.HTMLAttributes<HTMLElement> & {
+type TopNavProps = HTMLAttributes<HTMLElement> & {
   links: {
     title: string
     href: string
@@ -31,13 +32,14 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
           <DropdownMenuContent side='bottom' align='start'>
             {links.map(({ title, href, isActive, disabled }) => (
               <DropdownMenuItem key={`${title}-${href}`} asChild>
-                <Link
+                <NavLink
                   to={href}
-                  className={!isActive ? 'text-muted-foreground' : ''}
-                  disabled={disabled}
+                  className={({ isPending }) =>
+                    isPending ? "text-muted-foreground": ""
+                  }
                 >
                   {title}
-                </Link>
+                </NavLink>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
@@ -52,14 +54,13 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
         {...props}
       >
         {links.map(({ title, href, isActive, disabled }) => (
-          <Link
+          <NavLink
             key={`${title}-${href}`}
             to={href}
-            disabled={disabled}
             className={`text-sm font-medium transition-colors hover:text-primary ${isActive ? '' : 'text-muted-foreground'}`}
           >
             {title}
-          </Link>
+          </NavLink>
         ))}
       </nav>
     </>

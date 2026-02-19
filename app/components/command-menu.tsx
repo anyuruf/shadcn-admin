@@ -1,8 +1,7 @@
 import React from 'react'
-import { useNavigate } from '@tanstack/react-router'
 import { ArrowRight, ChevronRight, Laptop, Moon, Sun } from 'lucide-react'
 import { useSearch } from '@/context/search-provider'
-import { useTheme } from '@/context/theme-provider'
+
 import {
   CommandDialog,
   CommandEmpty,
@@ -14,10 +13,13 @@ import {
 } from '@/components/ui/command'
 import { sidebarData } from './layout/data/sidebar-data'
 import { ScrollArea } from './ui/scroll-area'
+import { useNavigate } from 'react-router'
+import { Theme, useTheme } from 'remix-themes'
+import { resolvedTheme } from '@/lib/utils'
 
 export function CommandMenu() {
   const navigate = useNavigate()
-  const { setTheme } = useTheme()
+  const [_, setTheme]  = useTheme()
   const { open, setOpen } = useSearch()
 
   const runCommand = React.useCallback(
@@ -43,7 +45,7 @@ export function CommandMenu() {
                       key={`${navItem.url}-${i}`}
                       value={navItem.title}
                       onSelect={() => {
-                        runCommand(() => navigate({ to: navItem.url }))
+                        runCommand(() => navigate(navItem.url))
                       }}
                     >
                       <div className='flex size-4 items-center justify-center'>
@@ -58,7 +60,7 @@ export function CommandMenu() {
                     key={`${navItem.title}-${subItem.url}-${i}`}
                     value={`${navItem.title}-${subItem.url}`}
                     onSelect={() => {
-                      runCommand(() => navigate({ to: subItem.url }))
+                      runCommand(() => navigate(subItem.url))
                     }}
                   >
                     <div className='flex size-4 items-center justify-center'>
@@ -72,14 +74,14 @@ export function CommandMenu() {
           ))}
           <CommandSeparator />
           <CommandGroup heading='Theme'>
-            <CommandItem onSelect={() => runCommand(() => setTheme('light'))}>
+            <CommandItem onSelect={() => runCommand(() => setTheme(Theme.LIGHT))}>
               <Sun /> <span>Light</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => setTheme('dark'))}>
+            <CommandItem onSelect={() => runCommand(() => setTheme(Theme.DARK))}>
               <Moon className='scale-90' />
               <span>Dark</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => setTheme('system'))}>
+            <CommandItem onSelect={() => runCommand(() => resolvedTheme())}>
               <Laptop />
               <span>System</span>
             </CommandItem>

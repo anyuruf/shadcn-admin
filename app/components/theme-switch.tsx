@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Check, Moon, Sun } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, resolvedTheme } from '@/lib/utils'
 import { Theme, useTheme } from 'remix-themes'
 import { Button } from '@/components/ui/button'
 import {
@@ -16,12 +16,6 @@ export function ThemeSwitch() {
   /* Update theme-color meta tag
    * when theme is updated */
   // Optimized: Memoize the resolved theme calculation to prevent unnecessary re-computations
-  const resolvedTheme = () => {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? Theme.DARK
-        : Theme.LIGHT
-    setTheme(systemTheme)
-  }
 
   useEffect(() => {
     const themeColor = Theme.DARK ? '#020817' : '#fff'

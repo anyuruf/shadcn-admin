@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { Link, useLocation } from '@tanstack/react-router'
+import { Link, useLocation } from 'react-router'
 import { ChevronRight } from 'lucide-react'
 import {
   Collapsible,
@@ -34,8 +34,10 @@ import {
 } from './types'
 
 export function NavGroup({ title, items }: NavGroupProps) {
-  const { state, isMobile } = useSidebar()
-  const href = useLocation({ select: (location) => location.href })
+  const { state, isMobile } = useSidebar();
+  const { pathname } = useLocation();
+
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{title}</SidebarGroupLabel>
@@ -44,14 +46,14 @@ export function NavGroup({ title, items }: NavGroupProps) {
           const key = `${item.title}-${item.url}`
 
           if (!item.items)
-            return <SidebarMenuLink key={key} item={item} href={href} />
+            return <SidebarMenuLink key={key} item={item} href={pathname} />
 
           if (state === 'collapsed' && !isMobile)
             return (
-              <SidebarMenuCollapsedDropdown key={key} item={item} href={href} />
+              <SidebarMenuCollapsedDropdown key={key} item={item} href={pathname} />
             )
 
-          return <SidebarMenuCollapsible key={key} item={item} href={href} />
+          return <SidebarMenuCollapsible key={key} item={item} href={pathname} />
         })}
       </SidebarMenu>
     </SidebarGroup>
@@ -180,6 +182,6 @@ function checkIsActive(href: string, item: NavItem, mainNav = false) {
     !!item?.items?.filter((i) => i.url === href).length || // if child nav is active
     (mainNav &&
       href.split('/')[1] !== '' &&
-      href.split('/')[1] === item?.url?.split('/')[1])
+      href.split('/')[1] === String(item?.url)?.split('/')[1])
   )
 }

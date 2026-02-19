@@ -1,8 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-
-
-
+import { Theme, useTheme } from 'remix-themes'
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -75,4 +73,15 @@ export function getErrorMessage(error: unknown) {
   }
   console.error('Unable to get error message for error', error)
   return 'Unknown Error'
+}
+
+const [ , setTheme] = useTheme();
+
+export const resolvedTheme = () => {
+  "use client"
+
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? Theme.DARK
+    : Theme.LIGHT
+  setTheme(systemTheme)
 }
